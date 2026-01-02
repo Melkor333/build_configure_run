@@ -1,0 +1,16 @@
+code generate
+generate blobs
+inputs generate
+blobs deploy
+#deploy -.-> deployment
+#deployment -.-> configure
+#configure -.-> service
+#deployment -.-> manage
+#manage -.-> service
+code deploy
+code configure
+inputs deploy
+#service -.-> control
+control process
+code control
+inputs control

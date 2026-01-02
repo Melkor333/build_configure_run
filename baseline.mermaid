@@ -1,0 +1,51 @@
+---
+title: Base
+---
+flowchart TD
+
+  code[Code]
+  inputs[Dynamic Input]
+  storage[File Store]
+  deployment[Deployed Files]
+  service[Service]
+  event[Events]
+  snapshot[State Snapshot]
+  blobs[Static Files]
+  metrics[metrics/logs]
+  process[Process]
+
+  generate[[generate]]
+  manage[[manage]]
+  store[[store]]
+  deploy[[deploy]]
+  control[[control]]
+  configure[[configure]]
+  emit[[emit]]
+  trigger[[trigger]]
+  change[[change]]
+  monitor[[monitor]]
+
+  code -.-> generate -.-> blobs
+  inputs -.-> generate
+  inputs -.-> store
+  blobs -.-> store -.-> storage
+  blobs -.-> deploy
+  storage -.-> deploy -.-> deployment
+  deployment -.-> configure -.-> service
+  service -.-> emit -.-> event
+  event -.-> trigger -.-> deployment
+  service -.-> monitor -.-> metrics
+  metrics -.-> deployment
+  deploy -.-> snapshot -.-> deploy
+  deployment -.-> manage -.-> service
+  event -.-> change -.-> inputs
+  change -.-> deployment
+  change -.-> storage
+  change -.-> code
+  code -.-> deploy
+  code -.-> configure
+  inputs -.-> deploy
+  service -.-> control
+  control -.-> process
+  code -.-> control
+  inputs -.-> control

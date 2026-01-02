@@ -1,0 +1,15 @@
+#!/usr/bin/env ysh
+
+# TODO: Proper argparse stuff
+# TODO TODO: argparse snippet :D
+var file = ARGV[0]
+
+#var connections = $(cat $file)=>split('\n')
+var items = $(grep -v '#' ansible | sed 's/ /\n/' | sort -u)=>split(u'\n')
+cat ./templates/head
+for item in @items {
+  grep "  $item" templates/classes
+}
+sed 's/ /-->/' $file | grep -v '^#'
+
+
