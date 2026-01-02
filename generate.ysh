@@ -5,7 +5,7 @@
 var file = ARGV[0]
 
 #var connections = $(cat $file)=>split('\n')
-var items = $(grep -v '#' ansible | sed 's/ /\n/' | sort -u)=>split(u'\n')
+var items = $(grep -v '#' $file | sed 's/ /\n/' | sort -u)=>split(u'\n')
 cat ./templates/head
 for item in @items {
   grep "  $item" templates/classes
