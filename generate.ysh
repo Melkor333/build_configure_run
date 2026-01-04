@@ -1,15 +1,38 @@
 #!/usr/bin/env ysh
 
-# TODO: Proper argparse stuff
-# TODO TODO: argparse snippet :D
 var file = ARGV[0]
 
-#var connections = $(cat $file)=>split('\n')
-var items = $(grep -v '#' $file | sed 's/ /\n/' | sort -u)=>split(u'\n')
+func setAdd(set, element) {
+  if (set.indexOf(element) < 0) {
+    call set->append(element)
+  }
+}
+
+proc eachMatch(;str, regex;;block) {
+var c = 0
+  var m = str.search(regex)
+  while (m !== null) {
+    call io->eval(block, in_captured_frame=true, vars={m, c})
+    setvar m = content.search(itemregex, pos=m.end(0))
+    setvar c += 1
+  }
+}
+
+var content = $(cat $file)
+var itemregex = / <capture w+ > ' --> '  <capture w+ >/
+var tuples = []
+var items = []
+eachMatch (content, itemregex) {
+  call tuples->append([m.group(1), m.group(2)])
+  call setAdd(items, m.group(1))
+  call setAdd(items, m.group(2))
+}
 cat ./templates/head
 for item in @items {
-  grep "  $item" templates/classes
+  grep -- "$item" templates/classes
 }
-sed 's/ /-->/' $file | grep -v '^#'
+cat $file
+#sed 's/ / --> /' $file | grep -v '^#'
+cat ./templates/end
 
 

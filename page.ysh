@@ -6,17 +6,19 @@ mkdir generated
 echo "<!doctype html><title>All packages</title>" > generated/index.html
 for for file in tools/* {
   var tool = $(basename $file)
-  mmdc -i <(ysh ./generate.ysh $file) -o generated/${tool}.svg
+  ysh ./generate.ysh $file | plantuml -pipe -svg > generated/${tool}.svg
   echo """
   <a href="./${tool}.html">$tool</a>
   """ >> generated/index.html
-  redir > ./generated/${tool}.html {
-    echo "<!doctype html><title>graph for $tool</title>"
-    echo """
-    <a href="./index.html">back</a>
-    """
-    echo """
-    <img src="./${tool}.svg">
-    """
-  } &
+  fork {
+      redir > ./generated/${tool}.html {
+      echo "<!doctype html><title>graph for $tool</title>"
+      echo """
+      <a href="./index.html">back</a>
+      """
+      echo """
+      <img src="./${tool}.svg">
+      """
+    }
+  }
 }

@@ -1,21 +1,21 @@
-  code[Code]
-  inputs[Dynamic Input]
-  storage[File Store]
-  deployment[Deployed Files]
-  service[Service]
-  event[Events]
-  snapshot[State Snapshot]
-  blobs[Static Files]
-  metrics[metrics/logs]
-  process[Process]
+node code
+node inputs
+node storage
+node deployment
+node service
+node events
+node snapshot
+node blobs
+node metrics
+node process
 
-  generate[[generate]]
-  manage[[manage]]
-  store[[store]]
-  deploy[[deploy]]
-  control[[control]]
-  configure[[configure]]
-  emit[[emit]]
-  trigger[[trigger]]
-  change[[change]]
-  monitor[[monitor]]
+interface generate
+interface manage
+interface store
+interface deploy
+interface control
+interface configure
+interface emit
+interface trigger
+interface change
+interface monitor
