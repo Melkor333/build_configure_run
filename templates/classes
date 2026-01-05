@@ -5,7 +5,7 @@ node deployment
 node service
 node events
 node snapshot
-node blobs
+node "blobs and ir" as blobs
 node metrics
 node process
 

@@ -19,7 +19,7 @@ var c = 0
 }
 
 var content = $(cat $file)
-var itemregex = / <capture w+ > ' --> '  <capture w+ >/
+var itemregex = / <capture w+ > ' --> '  <capture w+ > /
 var tuples = []
 var items = []
 eachMatch (content, itemregex) {
@@ -27,6 +27,7 @@ eachMatch (content, itemregex) {
   call setAdd(items, m.group(1))
   call setAdd(items, m.group(2))
 }
+
 cat ./templates/head
 for item in @items {
   grep -- "$item" templates/classes

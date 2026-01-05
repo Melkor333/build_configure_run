@@ -4,15 +4,18 @@ rm -rf generated
 mkdir generated
 
 echo "<!doctype html><title>All packages</title>" > generated/index.html
-for for file in tools/* {
+for for file in 00baseline tools/* {
+
   var tool = $(basename $file)
-  ysh ./generate.ysh $file | plantuml -pipe -svg > generated/${tool}.svg
+  ysh ./diagram.ysh $file | plantuml -pipe -svg > generated/${tool}.svg
+
   echo """
-  <a href="./${tool}.html">$tool</a>
+  <p><a href="./${tool}.html">$tool</a></p>
   """ >> generated/index.html
   fork {
       redir > ./generated/${tool}.html {
       echo "<!doctype html><title>graph for $tool</title>"
+      echo "<h1>$$(basename $file)</h1>"
       echo """
       <a href="./index.html">back</a>
       """
