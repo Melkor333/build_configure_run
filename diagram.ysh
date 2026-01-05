@@ -9,11 +9,11 @@ func setAdd(set, element) {
 }
 
 proc eachMatch(;str, regex;;block) {
-var c = 0
+  var c = 0
   var m = str.search(regex)
   while (m !== null) {
     call io->eval(block, in_captured_frame=true, vars={m, c})
-    setvar m = content.search(itemregex, pos=m.end(0))
+    setvar m = str.search(itemregex, pos=m.end(0))
     setvar c += 1
   }
 }
@@ -29,11 +29,28 @@ eachMatch (content, itemregex) {
 }
 
 cat ./templates/head
-for item in @items {
-  grep -- "$item" templates/classes
+if (len(ARGV) === 1) {
+  echo "Generating minimal" >&2
+  for item in @items {
+    grep -- "$item" templates/classes
+  }
+  cat $file
+# len 2+... we show all nodes!
+} else {
+  echo "Generating full" >&2
+  cat templates/classes
+  var co = $(cat templates/flows)
+  eachMatch (co, itemregex) {
+    # Not part of the diagram
+    try {
+      grep $[m.group(0)] $file
+    } 2> /dev/null
+    if failed {
+      write "$[m.group(0)] not in diagram" >&2
+      write "$[m.group(0)] #line.dotted"
+    }
+  }
 }
-cat $file
+
 #sed 's/ / --> /' $file | grep -v '^#'
 cat ./templates/end
-
-

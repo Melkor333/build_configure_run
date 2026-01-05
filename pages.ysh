@@ -1,27 +1,34 @@
 #!/usr/bin/env ysh
 
-rm -rf generated
-mkdir generated
+rm -rf generated/*
+mkdir -p generated
 
 echo "<!doctype html><title>All packages</title>" > generated/index.html
+# TODO: treat baseline differently
 for for file in 00baseline tools/* {
+  echo $file
 
   var tool = $(basename $file)
-  ysh ./diagram.ysh $file | plantuml -pipe -svg > generated/${tool}.svg
+  fork { ysh ./diagram.ysh $file | plantuml -pipe -svg > generated/${tool}_minimal.svg }
+  fork { ysh ./diagram.ysh $file b | plantuml -pipe -svg > generated/${tool}.svg }
 
   echo """
   <p><a href="./${tool}.html">$tool</a></p>
   """ >> generated/index.html
   fork {
-      redir > ./generated/${tool}.html {
-      echo "<!doctype html><title>graph for $tool</title>"
-      echo "<h1>$$(basename $file)</h1>"
-      echo """
+    redir > ./generated/${tool}.html {
+      write "<!doctype html><title>graph for $tool</title>"
+      write "<h1>$(basename $file)</h1>"
+      write """
       <a href="./index.html">back</a>
       """
-      echo """
-      <img src="./${tool}.svg">
+      write """
+      <div style="width:50%"><img style="max-width:100%" src="./${tool}.svg"></div>
+      """
+      write """
+      <div style="width:50%"><img style="max-width:50%" src="./${tool}_minimal.svg"></div>
       """
     }
   }
 }
+wait

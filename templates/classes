@@ -3,7 +3,7 @@ node inputs
 node storage
 node deployment
 node service
-node events
+node event
 node snapshot
 node "blobs and ir" as blobs
 node metrics
