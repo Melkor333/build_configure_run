@@ -1,13 +1,10 @@
-code --> generate
-generate --> blobs
-inputs --> generate
-blobs --> deploy
-control --> process
-code --> control
-inputs --> control
-deploy --> deployment
-deployment --> configure #line.dashed
-configure --> service #line.dashed
+code --> generate : Parse/expand Yaml
+inputs --> generate : External sources (yaml/json)
+generate --> blobs : Build internal inventory
+blobs --> deploy : "idempotent" changes
+control --> process : various execution modules
+code --> control : modules define process model
+deploy --> deployment : copy/change files in dest
+manage --> service #line.dashed : usually via systemd
 deployment --> manage #line.dashed
-manage --> service #line.dashed
 service --> control #line.dashed

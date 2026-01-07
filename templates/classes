@@ -6,7 +6,7 @@ node service
 node event
 node snapshot
 node "blobs and ir" as blobs
-node metrics
+node "metrics and logs" as metrics
 node process
 
 interface generate
@@ -14,7 +14,6 @@ interface manage
 interface store
 interface deploy
 interface control
-interface configure
 interface emit
 interface trigger
 interface change
