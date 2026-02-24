@@ -1,22 +1,24 @@
 #!/usr/bin/env ysh
 
-rm -rf generated/*
-mkdir -p generated
+setglobal OUT = "./dist"
 
-echo "<!doctype html><title>All packages</title>" > generated/index.html
+rm -rf $OUT/*
+mkdir -p $OUT
+
+echo "<!doctype html><title>All packages</title>" > $OUT/index.html
 # TODO: treat baseline differently
 for for file in 00baseline tools/* {
   echo $file
 
   var tool = $(basename $file)
-  fork { ysh ./diagram.ysh $file | plantuml -pipe -svg > generated/${tool}_minimal.svg }
-  fork { ysh ./diagram.ysh $file b | plantuml -pipe -svg > generated/${tool}.svg }
+  fork { ysh ./diagram.ysh $file | plantuml --verbose -pipe -svg > $OUT/${tool}_minimal.svg }
+  fork { ysh ./diagram.ysh $file b | plantuml --verbose -pipe -svg > $OUT/${tool}.svg }
 
   echo """
   <p><a href="./${tool}.html">$tool</a></p>
-  """ >> generated/index.html
+  """ >> $OUT/index.html
   fork {
-    redir > ./generated/${tool}.html {
+    redir > $OUT/${tool}.html {
       write "<!doctype html><title>graph for $tool</title>"
       write "<h1>$(basename $file)</h1>"
       write """

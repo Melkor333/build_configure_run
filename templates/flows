@@ -9,6 +9,7 @@ storage --> deploy
 deploy --> deployment
 deployment --> manage
 service --> emit
+process --> emit
 emit --> event
 event --> trigger
 event --> manage
@@ -31,3 +32,4 @@ service --> control
 control --> process
 code --> control
 inputs --> control
+inputs --> emit
