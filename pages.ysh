@@ -11,8 +11,8 @@ for for file in 00baseline tools/* {
   echo $file
 
   var tool = $(basename $file)
-  fork { ysh ./diagram.ysh $file | plantuml --verbose -pipe -svg > $OUT/${tool}_minimal.svg }
-  fork { ysh ./diagram.ysh $file b | plantuml --verbose -pipe -svg > $OUT/${tool}.svg }
+  fork { ysh ./diagram.ysh $file | plantuml -pipe -svg > $OUT/${tool}_minimal.svg }
+  fork { ysh ./diagram.ysh $file b | plantuml -pipe -svg > $OUT/${tool}.svg }
 
   echo """
   <p><a href="./${tool}.html">$tool</a></p>

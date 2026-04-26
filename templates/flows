@@ -3,6 +3,7 @@ generate --> blobs
 inputs --> generate
 inputs --> store
 blobs --> store
+blobs --> control
 store --> storage
 blobs --> deploy
 storage --> deploy

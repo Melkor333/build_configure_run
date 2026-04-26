@@ -1,0 +1,25 @@
+inputs --> store : ENV vars, etc.
+blobs --> control : yaml (considered data, not code. could also be input)
+store --> storage
+blobs --> deploy : container images
+deploy --> deployment : containers, service/etc. definitions
+deployment --> manage
+service --> emit
+emit --> event
+event --> trigger
+event --> manage
+trigger --> deployment
+service --> monitor
+monitor --> metrics
+metrics --> deployment
+manage --> service : manage pods (etc.)
+event --> change : autoscaling, recovery, etc.
+change --> inputs
+change --> deployment
+change --> storage
+change --> code
+code --> deploy : unsure?!
+code --> manage : unsure?!
+inputs --> deploy
+service --> control #line.dashed : initial container process
+control --> process

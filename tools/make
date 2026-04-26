@@ -1,0 +1,5 @@
+code --> generate : main job
+generate --> blobs
+inputs --> generate
+blobs --> deploy #line.dashed : make install 'abuse'
+deploy --> deployment

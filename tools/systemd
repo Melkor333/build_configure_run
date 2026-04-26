@@ -2,13 +2,11 @@ deployment --> manage : "main job, manage services"
 emit --> event
 event --> trigger
 trigger --> deployment
-process --> monitor #line.dashed : journald
+service --> monitor #line.dashed : journald
 monitor --> metrics #line.dashed
 manage --> service
 event --> manage
-change --> inputs
 service --> control
 control --> process
-inputs --> control #line.dashed : "e.g. dbus activation"
 inputs --> emit #line.dashed : e.g. dbus
 process --> emit #line.dashed : process state
