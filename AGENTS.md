@@ -30,8 +30,11 @@ output.
 ## CI / deployment
 
 `.github/workflows/gh-pages.yml` builds the site on every push to `main` (via
-`nix develop -c ysh ./pages.ysh`) and deploys `dist/` to GitHub Pages with
-`actions/deploy-pages`. A local push to main is therefore also a deployment.
+`nix develop -c ysh ./pages.ysh`) and pushes `dist/` to the `gh-pages` branch, which
+serves https://melkor333.github.io/build_configure_run/. A local push to main is
+therefore also a deployment. Pages uses the branch source because `GITHUB_TOKEN`
+cannot create an Actions-source Pages site (admin-only API); don't switch the workflow
+back to `actions/deploy-pages` unless Pages is first reconfigured in repo settings.
 
 ## Architecture
 
