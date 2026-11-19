@@ -23,8 +23,15 @@ ysh ./diagram.ysh tools/k8s
 ysh ./diagram.ysh tools/k8s b
 ```
 
-Dependencies: `ysh` (Oils) and `plantuml` must be on `PATH` (repo was developed with both
-from nix). There are no tests, no linter, and no CI. `dist/` is gitignored build output.
+Dependencies: `ysh` (Oils) and `plantuml` must be on `PATH`; use `nix develop` (see
+`flake.nix`) to get both. There are no tests and no linter. `dist/` is gitignored build
+output.
+
+## CI / deployment
+
+`.github/workflows/gh-pages.yml` builds the site on every push to `main` (via
+`nix develop -c ysh ./pages.ysh`) and deploys `dist/` to GitHub Pages with
+`actions/deploy-pages`. A local push to main is therefore also a deployment.
 
 ## Architecture
 
